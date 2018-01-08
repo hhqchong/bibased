@@ -52,7 +52,7 @@
         </javaClientGenerator>
         <!-- 指定数据库表 -->
       
-        <table  tableName="bm_operation_group" domainObjectName="BmOperationGroup" mapperName="BmOperationGroupDao" enableCountByExample="false"
+     <!--    <table  tableName="bm_operation_group" domainObjectName="BmOperationGroup" mapperName="BmOperationGroupDao" enableCountByExample="false"
                 enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                 selectByExampleQueryId="false"  />
         <table  tableName="bm_report" domainObjectName="BmReport" mapperName="BmReportDao" enableCountByExample="false"
@@ -75,7 +75,7 @@
      <table  tableName="bm_student" domainObjectName="BmStudent" mapperName="BmStudentDao" enableCountByExample="false"
                 enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                 selectByExampleQueryId="false"  />-->
-        <table  tableName="bm_teacher" domainObjectName="BmTeacher" mapperName="BmTeacherDao" enableCountByExample="false"
+     <!--      <table  tableName="bm_teacher" domainObjectName="BmTeacher" mapperName="BmTeacherDao" enableCountByExample="false"
                 enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                 selectByExampleQueryId="false"  />
         <table  tableName="bm_teacher_group" domainObjectName="BmTeacherGroup" mapperName="BmTeacherGroupDao" enableCountByExample="false"
@@ -84,7 +84,7 @@
         <table  tableName="bm_topic" domainObjectName="BmTopic" mapperName="BmTopicDao" enableCountByExample="false"
                 enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                 selectByExampleQueryId="false"  />
- <!--       <table  tableName="bm_user" domainObjectName="BmUser" mapperName="BmUserDao" enableCountByExample="false"
+       <table  tableName="bm_user" domainObjectName="BmUser" mapperName="BmUserDao" enableCountByExample="false"
                 enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                 selectByExampleQueryId="false"  />
 

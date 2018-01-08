@@ -25,6 +25,18 @@
     from bm_teacher
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  <select id="selectByLikePage" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	 select 
+  	   <include refid="Base_Column_List" />
+  	    from bm_teacher 
+  	    where 1=1
+  	   <if test="keyword != null and keyword != ''">
+        AND name LIKE concat(concat('%',#{keyword}),'%') or college LIKE concat(concat('%',#{keyword}),'%')
+        or job_title LIKE concat(concat('%',#{keyword}),'%')
+      </if>
+       order by create_time
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from bm_teacher
     where id = #{id,jdbcType=VARCHAR}

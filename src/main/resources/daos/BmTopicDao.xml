@@ -2,20 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jmu.bibasedmanage.dao.BmTopicDao">
   <resultMap id="BaseResultMap" type="com.jmu.bibasedmanage.pojo.BmTopic">
-    <id column="id" jdbcType="VARCHAR" property="id" />
+    <id column="pid" jdbcType="VARCHAR" property="id" />
     <result column="teacher_id" jdbcType="VARCHAR" property="teacherId" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="pname" jdbcType="VARCHAR" property="name" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="required" jdbcType="VARCHAR" property="required" />
     <result column="student_num" jdbcType="INTEGER" property="studentNum" />
     <result column="student_now_num" jdbcType="INTEGER" property="studentNowNum" />
-    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="pstatus" jdbcType="VARCHAR" property="status" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="record_status" jdbcType="VARCHAR" property="recordStatus" />
+    <association property="bmTeacher"  javaType="com.jmu.bibasedmanage.pojo.BmTeacher" >
+    	 <id column="tid" jdbcType="VARCHAR" property="id" />
+         <result column="tname" jdbcType="VARCHAR" property="name" />
+    </association>
   </resultMap>
   <sql id="Base_Column_List">
-    id, teacher_id, name, content, required, student_num, student_now_num, status, create_time, 
+    id as pid, teacher_id, name as pname, content, required, student_num, student_now_num, status, create_time, 
     update_time, record_status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -23,6 +27,51 @@
     <include refid="Base_Column_List" />
     from bm_topic
     where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByLikePage" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	 select 
+  	     t.name as tname,
+  	     p.id as pid,
+  	     p.teacher_id,
+  	     p.name as pname,
+  	     p.status as pstatus,
+  	     content, required, student_num, student_now_num
+  	    from bm_topic p left join bm_teacher t on t.id=p.teacher_id
+  	    where 1=1
+  	  <if test="tId != null and tId != ''">
+        AND p.teacher_id= #{tId,jdbcType=VARCHAR}
+      </if>
+  	   <if test="keyword != null and keyword != ''">
+        AND p.name LIKE concat(concat('%',#{keyword}),'%')
+         or 
+         <if test="tId != null and tId != ''">
+         p.teacher_id= #{tId,jdbcType=VARCHAR} and
+      </if>
+         t.name LIKE concat(concat('%',#{keyword}),'%')
+        or
+           <if test="tId != null and tId != ''">
+         p.teacher_id= #{tId,jdbcType=VARCHAR} and
+      </if> content LIKE concat(concat('%',#{keyword}),'%') or
+          <if test="tId != null and tId != ''">
+         p.teacher_id= #{tId,jdbcType=VARCHAR} and
+      </if> required LIKE concat(concat('%',#{keyword}),'%')
+      </if>
+      <if test="topicId != null and topicId != ''">
+        AND p.id= #{topicId,jdbcType=VARCHAR}
+      </if>
+     
+       order by p.create_time
+  </select>
+  <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	 select 
+  	     t.name as tname,
+  	     p.id as pid,
+  	     p.teacher_id,
+  	     p.name as pname,
+  	     p.status as pstatus,
+  	     content, required, student_num, student_now_num
+  	     from bm_topic p left join bm_teacher t on t.id=p.teacher_id
+  	     where p.id = #{id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from bm_topic

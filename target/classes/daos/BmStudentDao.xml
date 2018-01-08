@@ -21,21 +21,18 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="record_status" jdbcType="VARCHAR" property="recordStatus" />
     <result column="comment_teacher" jdbcType="VARCHAR" property="commentTeacher" />
-  
   </resultMap>
-  
   <sql id="Base_Column_List">
-    id,topic_id, teacher_group_id, student_id, grade, college, major, classes,name,
+    id, topic_id, teacher_group_id, student_id, grade, college, major, classes, name, 
     sex, email, mobile, answer_evaluate, answer_score, status, create_time, update_time, 
     record_status, comment_teacher
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from bm_student t 
-    where t.id = #{id,jdbcType=VARCHAR}
+    from bm_student
+    where id = #{id,jdbcType=VARCHAR}
   </select>
-  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from bm_student
     where id = #{id,jdbcType=VARCHAR}
@@ -259,10 +256,14 @@
       comment_teacher = #{commentTeacher,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <select id="selectByPage" resultMap="BaseResultMap">
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
     select
     <include refid="Base_Column_List" />
     from bm_student
-    order by create_time
+    where 1=1
+    <if test="keyword != null and keyword != ''">
+      and student_id like concat("%", #{keyword}, "%")
+    </if>
+    order by create_time desc
   </select>
 </mapper>

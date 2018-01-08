@@ -1,6 +1,7 @@
 package com.jmu.bibasedmanage.service;
 
 import com.jmu.bibasedmanage.pojo.BmStudent;
+import com.jmu.bibasedmanage.pojo.BmTopic;
 import com.jmu.bibasedmanage.vo.Page;
 
 import java.util.Map;
@@ -23,4 +24,8 @@ public interface StudentService {
     void update(BmStudent bmStudent);
 
     void delete(String id);
+    
+    BmStudent getById(String id);
+    
+
 }

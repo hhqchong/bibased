@@ -109,6 +109,12 @@
       <artifactId>jstl</artifactId>
       <version>1.2</version>
     </dependency>
+    <!-- jxl处理excel -->
+     <dependency>
+	 <groupId>net.sourceforge.jexcelapi</groupId>
+	 <artifactId>jxl</artifactId>
+	 <version>2.6.12</version>
+     </dependency>
 
     <!-- 日志文件管理包 -->
     <dependency>

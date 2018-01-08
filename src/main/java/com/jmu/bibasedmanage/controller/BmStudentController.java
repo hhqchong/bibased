@@ -1,6 +1,7 @@
 package com.jmu.bibasedmanage.controller;
 
 import com.jmu.bibasedmanage.pojo.BmStudent;
+import com.jmu.bibasedmanage.pojo.BmTopic;
 import com.jmu.bibasedmanage.service.StudentService;
 import com.jmu.bibasedmanage.util.ResponseUtil;
 import com.jmu.bibasedmanage.vo.JsonResponse;
@@ -20,52 +21,70 @@ import java.util.Map;
 @RequestMapping("/student")
 public class BmStudentController {
 
-    @Autowired
-    private StudentService studentService;
+	@Autowired
+	private StudentService studentService;
 
-    @RequestMapping(value = "/list.html", method = RequestMethod.GET)
-    public ModelAndView list(){
-        return new ModelAndView("");
-    }
+	@RequestMapping(value = "/list.html", method = RequestMethod.GET)
+	public ModelAndView list() {
+		return new ModelAndView("student/table.html");
+	}
 
-    /**
-     * 学生列表
-     * @param map（pageNo:当前页，pageSize:每页条数）
-     * @param page
-     * @return
-     */
-    @RequestMapping(value = "/list", method = RequestMethod.POST)
-    @ResponseBody
-    public JsonResponse listData(@RequestParam Map<String, Object> map, Page<BmStudent> page){
-        return ResponseUtil.success(studentService.list(map, page));
-    }
+	/**
+	 * 学生列表
+	 * 
+	 * @param map
+	 *            （pageNo:当前页，pageSize:每页条数）
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(value = "/list", method = RequestMethod.POST)
+	@ResponseBody
+	public JsonResponse listData(@RequestParam Map<String, Object> map,
+			Page<BmStudent> page) {
+		return ResponseUtil.success(studentService.list(map, page));
+	}
 
-    @RequestMapping(value = "/add.html", method = RequestMethod.GET)
-    public ModelAndView add(){
-        return new ModelAndView("");
-    }
+	@RequestMapping(value = "/add.html", method = RequestMethod.GET)
+	public ModelAndView add() {
+		return new ModelAndView("student/form_add.html");
+	}
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    @ResponseBody
-    public JsonResponse addData(BmStudent bmStudent){
-        studentService.add(bmStudent);
-        return ResponseUtil.success();
-    }
-    @RequestMapping(value = "/update.html",method = RequestMethod.GET)
-    public ModelAndView update(){
-        return new ModelAndView("");
-    }
-    @RequestMapping(value = "/update",method = RequestMethod.POST)
-    @ResponseBody
-    public JsonResponse updateData(BmStudent bmStudent){
-        studentService.update(bmStudent);
-        return ResponseUtil.success();
-    }
-    @RequestMapping(value = "/delete",method = RequestMethod.POST)
-    public JsonResponse delete(String id){
-        studentService.delete(id);
-        return ResponseUtil.success();
-    }
+	@RequestMapping(value = "/get", method = RequestMethod.POST)
+	@ResponseBody
+	public JsonResponse get(String id) {
+		return ResponseUtil.success(studentService.getById(id));
+	}
 
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@ResponseBody
+	public JsonResponse addData(BmStudent bmStudent) {
+		studentService.add(bmStudent);
+		return ResponseUtil.success();
+	}
+
+	@RequestMapping(value = "/update.html", method = RequestMethod.GET)
+	public ModelAndView update(String id) {
+		return new ModelAndView("/student/form_edit.html").addObject("id", id);
+	}
+
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	@ResponseBody
+	public JsonResponse updateData(BmStudent bmStudent) {
+		studentService.update(bmStudent);
+		return ResponseUtil.success();
+	}
+
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public JsonResponse delete(String id) {
+		studentService.delete(id);
+		return ResponseUtil.success();
+	}
+
+
+
+	@RequestMapping(value = "excel-upload.html")
+	public ModelAndView excelUpload() {
+		return new ModelAndView("/student/excel_upload.html");
+	}
 
 }

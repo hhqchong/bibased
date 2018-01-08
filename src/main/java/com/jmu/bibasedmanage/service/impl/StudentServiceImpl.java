@@ -5,7 +5,9 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.jmu.bibasedmanage.consts.CommonConst;
 import com.jmu.bibasedmanage.dao.BmStudentDao;
 import com.jmu.bibasedmanage.pojo.BmStudent;
+import com.jmu.bibasedmanage.pojo.BmTopic;
 import com.jmu.bibasedmanage.service.StudentService;
+import com.jmu.bibasedmanage.service.TopicService;
 import com.jmu.bibasedmanage.util.UUIDUtils;
 import com.jmu.bibasedmanage.vo.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ import java.util.Date;
 import java.util.Map;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 /**
  * Created by ljc on 2017/12/18.
  */
@@ -25,6 +29,8 @@ public class StudentServiceImpl implements StudentService{
 
     @Autowired
     private BmStudentDao bmStudentDao;
+    @Resource
+    private TopicService topicService;
 
     public Page<BmStudent> list(Map map, Page<BmStudent> page) {
         PageBounds pageBounds = new PageBounds(page.getPageNo(), page.getPageSize());
@@ -53,4 +59,10 @@ public class StudentServiceImpl implements StudentService{
         bmStudent.setRecordStatus(CommonConst.RECORD_STATUS_DELETED);
         bmStudentDao.updateByPrimaryKeySelective(bmStudent);
     }
+
+	@Override
+	 public BmStudent getById(String id) {
+        return bmStudentDao.selectByPrimaryKey(id);
+    }
+
 }

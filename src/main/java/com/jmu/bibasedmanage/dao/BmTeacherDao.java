@@ -1,6 +1,12 @@
 package com.jmu.bibasedmanage.dao;
 
+import java.util.List;
+import java.util.Map;
+
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import com.jmu.bibasedmanage.pojo.BmStudent;
 import com.jmu.bibasedmanage.pojo.BmTeacher;
+import com.jmu.bibasedmanage.pojo.BmTopic;
 
 public interface BmTeacherDao {
     int deleteByPrimaryKey(String id);
@@ -14,4 +20,8 @@ public interface BmTeacherDao {
     int updateByPrimaryKeySelective(BmTeacher record);
 
     int updateByPrimaryKey(BmTeacher record);
+    
+    List<BmTeacher> selectByLikePage(Map map,PageBounds pageBounds);
+ 
+    List<BmTeacher> selectByLike(String teacherInfo);
 }

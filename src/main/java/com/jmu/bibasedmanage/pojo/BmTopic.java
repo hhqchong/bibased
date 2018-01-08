@@ -25,7 +25,18 @@ public class BmTopic {
 
     private String recordStatus;
 
-    public String getId() {
+    private BmTeacher bmTeacher;
+    
+    
+    public BmTeacher getBmTeacher() {
+		return bmTeacher;
+	}
+
+	public void setBmTeacher(BmTeacher bmTeacher) {
+		this.bmTeacher = bmTeacher;
+	}
+
+	public String getId() {
         return id;
     }
 
